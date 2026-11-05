@@ -1,7 +1,53 @@
 # Stretch goals
 
-Finished the checkpoints? Pick one. Each lists where to start. Your coding
-assistant plus [AGENTS.md](../AGENTS.md) will get you most of the way.
+Finished the checkpoints? Start with the two featured stretch goals. They are
+already built into the repo and switched off; you turn them on, see them work,
+then extend them.
+
+## Featured stretch 1: MCP tools (read-only)
+
+Your agent connects as an **MCP client** to Cloudflare's documentation MCP
+server and gets one read-only tool, `search_cloudflare_documentation`.
+
+```sh
+npm run dev:extensions          # uses the "extensions" environment in wrangler.jsonc
+```
+
+1. Ask: "Use the Cloudflare documentation search tool to explain Durable Object alarms."
+2. An **MCP** tool card appears; the inspector's instance card shows `MCP: cloudflare-docs · 1 tool`.
+3. Extend it: read `src/agent/extensions/config.ts`. Servers and allowed tools
+   come from an allowlist in code, never from the browser.
+
+Details: [extensions/mcp.md](extensions/mcp.md).
+
+## Featured stretch 2: Dynamic Workers (isolated code)
+
+An `analyzeNotes` tool runs JavaScript in a separate Worker loaded at runtime,
+with no network, no bindings, and CPU limits. Needs the Workers Paid plan
+(lab accounts have it).
+
+```sh
+npm run dev:extensions
+npm run test:extensions         # real Worker Loader tests
+```
+
+1. Save two notes, then ask: "Analyze my notes with the analyzeNotes tool."
+2. The card **Analyze notes (isolated)** shows stats computed inside the sandbox.
+3. Extend it: change `NOTE_STATS_SOURCE` in `src/agent/extensions/dynamic.ts`
+   (for example, count words per note) and update `NoteStatsSchema` to match.
+
+Deploy both: `npm run deploy:extensions` (a separate Worker named
+`cloudflare-agent-starter-extensions`; set `AI_GATEWAY_ID` under
+`env.extensions.vars` in `wrangler.jsonc` first).
+
+Details: [extensions/dynamic-workers.md](extensions/dynamic-workers.md).
+
+---
+
+## More ideas
+
+Each lists where to start. Your coding assistant plus
+[AGENTS.md](../AGENTS.md) will get you most of the way.
 
 ## Make it yours (Best Real-World Use Case)
 
@@ -49,7 +95,5 @@ assistant plus [AGENTS.md](../AGENTS.md) will get you most of the way.
 - Protect your URL with Cloudflare Access.
 - Derive the instance name from the logged-in user on the server, so each person
   gets their own agent.
-- Try the optional [extensions](extensions/README.md): a read-only MCP tool or
-  a Dynamic Workers sandbox (Dynamic Workers need the Workers Paid plan).
 
 When you submit, say which stretch goal you reached.

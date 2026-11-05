@@ -18,7 +18,7 @@ Objects, AI Gateway, React, and Vite. Use synthetic data only.
 | Schedule durable work that runs with the browser closed | [CP04](docs/checkpoints/cp04-reminders.md)     | `this.schedule()`                               |
 | Deploy a live app and submit it                         | [CP05](docs/checkpoints/cp05-deploy-submit.md) | `wrangler deploy` to `*.workers.dev`            |
 
-Finished early? Pick a [stretch goal](docs/stretch-goals.md).
+Finished early? Try the featured [stretch goals](docs/stretch-goals.md): MCP tools and Dynamic Workers.
 
 ## Before the session
 
@@ -43,7 +43,7 @@ that turns green when you're done, and hints that go up to the full code.
 
 We pick three winners after the session. No live demo needed.
 
-**Submission form:** https://forms.gle/REPLACE_WITH_FORM_ID
+**Submission form:** https://forms.gle/UyPajN4mvcpCKJrT6
 
 Submit:
 
