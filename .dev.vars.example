@@ -1,0 +1,5 @@
+# Copy to .dev.vars for local development.
+# The AI Gateway id created in your Cloudflare account (AI > AI Gateway).
+# No gateway token is needed: requests through the Workers AI binding are
+# pre-authenticated, even when the gateway has Authenticated Gateway enabled.
+AI_GATEWAY_ID=

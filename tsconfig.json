@@ -1,0 +1,9 @@
+{
+	"extends": "agents/tsconfig",
+	"compilerOptions": {
+		"types": ["./worker-configuration.d.ts", "vite/client", "@cloudflare/vitest-plugin/types"]
+	},
+	"include": ["src", "tests", "vite.config.ts", "vitest.config.ts", "worker-configuration.d.ts"],
+	// The live e2e layer runs in Node, not workerd, and has its own tsconfig.
+	"exclude": ["tests/e2e"]
+}

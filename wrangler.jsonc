@@ -1,0 +1,45 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-agent-starter",
+	"main": "src/server.ts",
+	// Pinned to the newest date supported by the workerd bundled with the pinned
+	// wrangler/vite-plugin. Bump deliberately together with those packages.
+	"compatibility_date": "2026-10-19",
+	"compatibility_flags": ["nodejs_compat"],
+	"upload_source_maps": true,
+	"observability": { "enabled": true },
+	// Workers AI always runs remotely, including during `npm run dev`, and is billed.
+	"ai": { "binding": "AI", "remote": true },
+	"vars": {
+		// Set to the AI Gateway created for this account. Model calls fail with an
+		// actionable error while this is empty, so traffic never bypasses the gateway.
+		"AI_GATEWAY_ID": ""
+	},
+	"assets": {
+		"not_found_handling": "single-page-application",
+		// Without this, the SPA fallback would answer /agents/* with index.html.
+		"run_worker_first": ["/agents/*", "/api/*"]
+	},
+	"durable_objects": {
+		"bindings": [{ "name": "Assistant", "class_name": "Assistant" }]
+	},
+	// Append-only. Never rename Assistant or rewrite an existing tag once deployed.
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["Assistant"] }],
+	"env": {
+		// Optional extensions (MCP, Dynamic Workers). Opt in with CLOUDFLARE_ENV=extensions.
+		// Bindings are not inherited between environments, so the core ones are repeated.
+		"extensions": {
+			"ai": { "binding": "AI", "remote": true },
+			"vars": {
+				"AI_GATEWAY_ID": "",
+				// A key into the allowlist in src/agent/extensions/config.ts, never a URL.
+				"MCP_SERVER": "cloudflare-docs"
+			},
+			"durable_objects": {
+				"bindings": [{ "name": "Assistant", "class_name": "Assistant" }]
+			},
+			// Dynamic Workers require the Workers Paid plan.
+			"worker_loaders": [{ "binding": "LOADER" }]
+		}
+	}
+}
